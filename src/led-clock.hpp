@@ -8,18 +8,27 @@
 #include "clock.hpp"
 
 /**
+ * A binary clock that reports the time tracked by a BinaryDate.
+ */
+class BinaryClock {
+public:
+	BinaryClock();
+	std::string report_time();
+private:
+	BinaryDate binclock;
+};
+
+/**
  * A display for a BinaryClock.
  *
  * The LED matrix is assumed to have dimensions 16x32.
  */
-class LedClock: public RGBMatrixManipulator {
+class LedClock: public RGBMatrixManipulator, public BinaryClock {
 public:
 	LedClock();
 	virtual ~LedClock();
 	void Run();
-	std::string report_time();
 private:
-	BinaryDate binclock;
 	GPIO io;
 	RGBMatrix matrix;
 };
