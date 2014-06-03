@@ -1,0 +1,35 @@
+# Project files
+bin/*
+.project
+.pydevproject
+.settings
+.cproject
+.autotools
+
+# Editor stuff
+*.swp
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Python bytecode
+*.pyc
+
+# Executables
+*.exe
+*.out
+*.app
