@@ -23,14 +23,13 @@ std::string BinaryClock::report_time() {
 "* * *                           \n" +
 "                                \n" +
 "****                            \n" +
-" **    " + binclock.get_second() + "                   \n" +
+"**                              \n" +
+"  **   " + binclock.get_second() + "                   \n" +
 "****                            \n" +
 "                                \n" +
-" # #                ###         \n" +
-"# # #               #  #        \n" +
-"# # #  " + binclock.get_month() + "         #  #  " + binclock.get_day() +
-	" \n" +
-"# # #               ###         ";
+" # #            ###         \n" +
+"# # #  " + binclock.get_month() + "     #  # " + binclock.get_day() + "  \n" +
+"# # #           ###  ";
 }
 
 /**
