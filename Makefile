@@ -7,9 +7,12 @@ LDFLAGS=-lpthread
 
 all: $(EXE)
 
-bin/piclock: $(OBJECTS) src/main.cpp
+bin/piclock: $(OBJECTS) src/main.cpp | bin
 	$(CXX) $(CXXFLAGS) $(OBJECTS) src/main.cpp -o $@ $(LDFLAGS)
 	
+bin:
+	mkdir bin
+
 src/led-clock.o: src/led-clock.cpp src/led-clock.hpp
 	$(CXX) $(CXXFLAGS) -c src/led-clock.cpp -o $@
 
@@ -24,4 +27,5 @@ $(RPI_RGB)/gpio.o: $(RPI_RGB)/gpio.cc $(RPI_RGB)/gpio.h
 
 clean:
 	rm -f $(EXE) $(OBJECTS)
+	rmdir bin
 	cd $(RPI_RGB) && $(MAKE) clean
