@@ -25,7 +25,6 @@ build/real-time-clock: i2c
 	echo "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device" >> build/rc.local
 	tail -n 1 /etc/rc.local >> build/rc.local
 	cp build/rc.local /etc/rc.local
-	hwclock -s
 	touch $@
 
 i2c: | build/i2c-tools-installed build/bcm-unblacklisted build/i2c-tools-added

@@ -14,6 +14,7 @@ After rebooting the Pi it will use the hardware clock to set its internal
 clock.
 The Makefile assumes that the following real time clock module is used:
 http://www.abelectronics.co.uk/products/3/Raspberry-Pi/15/RTC-Pi-Real-time-Clock-Module
+The installation will only take effect after you reboot.
 
 If you are using a hardware clock that has not been set and the Pi has no
 internet connection, the clock will not know what time it is and thus need to
