@@ -50,6 +50,9 @@ LedClock::~LedClock() {
 
 /**
  * Update LED matrix to match current time as long as thread is running.
+ *
+ * The function trusts that report_time will provide a string with the
+ * appropriate dimensions.
  */
 void LedClock::Run() {
 	std::string current_time = report_time();
