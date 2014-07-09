@@ -35,9 +35,12 @@ std::string BinaryClock::report_time() {
 /**
  * Initialize LedClock and store objects needed for time reporting.
  */
-LedClock::LedClock(): BinaryClock(), io(), matrix(&io),
-RGBMatrixManipulator(&matrix) {
+// TODO: This is the place where all the setup has to go down
+LedClock::LedClock(): BinaryClock(), io() {
+    // TODO: Raise an error here if it doesn't work
 	io.Init();
+    matrix = RGBMatrix(&io);
+    updater = DisplayUpdater(&matrix);
 }
 
 /**
