@@ -1,4 +1,4 @@
-CXXFLAGS=-O3 -std=c++11
+CXXFLAGS=-O3 -std=c++0x
 EXE=bin/piclock
 RPI_RGB=external/rpi-rgb-led-matrix
 EXTERNAL_OBJECTS=$(RPI_RGB)/led-matrix.o $(RPI_RGB)/gpio.o $(RPI_RGB)/thread.o
@@ -63,5 +63,5 @@ $(RPI_RGB)/gpio.o: $(RPI_RGB)/gpio.cc $(RPI_RGB)/gpio.h
 
 clean:
 	cd $(RPI_RGB) && $(MAKE) clean
-	rm -f $(EXE) $(OBJECTS) build
+	rm -rf $(EXE) $(OBJECTS) build
 	rmdir bin
