@@ -15,7 +15,7 @@ public:
 	BinaryClock();
 	std::string report_time();
 private:
-	BinaryDate binclock;
+	BinaryDate bindate;
 };
 
 // TODO: This class needs to be completely reworked. I've already started - I'm
@@ -42,15 +42,15 @@ private:
  *
  * The LED matrix is assumed to have dimensions 16x32.
  */
-class LedClock: public RGBMatrixManipulator, public BinaryClock {
-public:
-	LedClock();
-	virtual ~LedClock();
-	void Run();
-private:
-	GPIO io;
-	RGBMatrix matrix;
-    DisplayUpdater updater;
-};
+//class LedClock: public RGBMatrixManipulator, public BinaryClock {
+//public:
+//	LedClock();
+//	virtual ~LedClock();
+//	void Run();
+//private:
+//	GPIO io;
+//	RGBMatrix matrix;
+//    DisplayUpdater updater;
+//};
 
 #endif /* LED_ARRAY_HPP_ */
