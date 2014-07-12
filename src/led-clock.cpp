@@ -27,9 +27,9 @@ std::string BinaryClock::report_time() {
 "  **   " + bindate.get_second() + "\n" +
 "****\n" +
 "\n" +
-" # #            ###\n" +
-"# # #  " + bindate.get_month() + "     #  # " + bindate.get_day() + "\n" +
-"# # #           ###  ";
+" # #                ###\n" +
+"# # #  " + bindate.get_month() + "         #  # " + bindate.get_day() + "\n" +
+"# # #               ###  ";
 }
 
 StringReporter::~StringReporter() {
@@ -64,4 +64,10 @@ void BinaryClockReporter::set_color(char symbol) {
   }
   matrix_->SetPixel(x, y, r, g, b);
   x++;
+}
+
+void LedClock::run() {
+  updater.Start(10);
+  reporter.Start();
+  getchar();
 }

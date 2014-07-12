@@ -55,4 +55,19 @@ private:
   std::string get_string();
 };
 
+/*
+ * An interface between a BinaryClockReporter and the LED array.
+ *
+ * The LedClock takes care of managing proper threading for the
+ * BinaryClockReporter and the DisplayUpdater.
+ */
+class LedClock {
+public:
+  LedClock(RGBMatrix m) : reporter(&m), updater(&m) {}
+  void run();
+private:
+  BinaryClockReporter reporter;
+  DisplayUpdater updater;
+};
+
 #endif /* LED_ARRAY_HPP_ */
