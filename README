@@ -1,5 +1,5 @@
-BinaryClock
-===========
+BinaryClock 1.0.0
+=================
 
 Implementations of binary clocks, both as a hardware prototype for a standalone
 device and for the Raspberry Pi with an LED array.
@@ -24,3 +24,9 @@ hardware clock to the system time with the following command:
     sudo hwclock -w
 
 Afterwards the clock will be set correctly.
+
+The program works by parsing a string, converting it into colors and setting
+the corresponding pixels in the LED array to those colors. For details see the
+source code.
+
+Author: Daniel Lee (erget2005 <at> gmail.com)

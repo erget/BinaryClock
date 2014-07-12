@@ -1,3 +1,20 @@
+/*
+ * This file is part of BinaryClock.
+ *
+ * BinaryClock is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * BinaryClock is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * BinaryClock.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "led-clock.hpp"
 #include "../external/rpi-rgb-led-matrix/led-matrix.h"
 
@@ -6,75 +23,83 @@
 /**
  * Initialize BinaryClock and store BinaryDate to report from.
  */
-BinaryClock::BinaryClock(): binclock(BinaryDate()) {}
+BinaryClock::BinaryClock(): bindate(BinaryDate()) {}
 
 /**
  * Return current time as a string compatible with the RGB LED matrix.
  */
 std::string BinaryClock::report_time() {
-	return std::string("") +
-"* *                 # # #       \n" +
-"***    " + binclock.get_hour() + "        # # # " +
-	binclock.get_day_of_week() + "   \n" +
-"* *                  # #        \n" +
-"                                \n" +
-" * *                            \n" +
-"* * *  " + binclock.get_minute() + "                   \n" +
-"* * *                           \n" +
-"                                \n" +
-"****                            \n" +
-"**                              \n" +
-"  **   " + binclock.get_second() + "                   \n" +
-"****                            \n" +
-"                                \n" +
-" # #            ###         \n" +
-"# # #  " + binclock.get_month() + "     #  # " + binclock.get_day() + "  \n" +
-"# # #           ###  ";
+	return std::string("\n") +
+      /*
+"* *                 # # #\n" +
+"***                 # # #\n" +
+"***    " + bindate.get_hour() + "        # # # " + bindate.get_day_of_week() + "\n" +
+"* *                  # #\n" +
+"\n" +
+" * *                 # #\n" +
+"* * *               # # #\n" +
+"* * *  " + bindate.get_minute() + "       # # # " + bindate.get_month() + "\n" +
+"* * *               # # #\n" +
+"\n" +
+"****                ###\n" +
+"**                  #  #\n" +
+"  **   " + bindate.get_second() + "       #  #  " + bindate.get_day() + "\n" +
+"****                ###\n";
+*/
+
+
+"* *                  # #\n" +
+"***                 # # #\n" +
+"***    " + bindate.get_hour() + "        # # # " + bindate.get_month() + "\n" +
+"* *                 # # #\n" +
+"\n" +
+" * *                ###\n" +
+"* * *               #  #\n" +
+"* * *  " + bindate.get_minute() + "       #  #  " + bindate.get_day() + "\n" +
+"* * *               ###\n" +
+"\n" +
+"****                # # #\n" +
+"**                  # # #\n" +
+"  **   " + bindate.get_second() + "       # # # " + bindate.get_day_of_week() + "\n" +
+"****                 # #\n";
 }
 
-/**
- * Initialize LedClock and store objects needed for time reporting.
- */
-LedClock::LedClock(): BinaryClock(), io(), matrix(&io),
-RGBMatrixManipulator(&matrix) {
-	io.Init();
+StringReporter::~StringReporter() {
+  matrix_->ClearScreen();
+  matrix_->UpdateScreen();
 }
 
-/**
- * Clear screen to ensure that display is blank when object is destroyed.
- */
-LedClock::~LedClock() {
-	matrix.ClearScreen();
-	matrix.UpdateScreen();
+void StringReporter::Run() {
+  while (running_) {
+    auto report_string = get_string();
+    x = y = 0;
+    for (unsigned int i = 0; i < report_string.length(); ++i) {
+      auto symbol = report_string[i];
+      set_color(symbol);
+    }
+    usleep(5000);
+  }
 }
 
-/**
- * Update LED matrix to match current time as long as thread is running.
- *
- * The function trusts that report_time will provide a string with the
- * appropriate dimensions.
- */
-void LedClock::Run() {
-	std::string current_time = report_time();
-	int i, r, g, b;
-	i = r = g = b = 0;
-	while (running_) {
-		for (int x = 0; x < matrix.width(); ++x) {
-			for (int y = 0; y < matrix.height(); ++y) {
-				auto symbol = current_time[i];
-				switch (symbol) {
-				case '*': r = b = 0; g = 255; break;
-				case '#': g = b = 0; r = 255; break;
-				case '0': r = g = 0; b = 255; break;
-				case '1': r = g = 255; b = 0; break;
-				default: r = g = b = 0; break;
-				}
-				matrix.SetPixel(x, y, r, g, b);
-				i++;
-			}
-			i++;
-		}
-		usleep(5000);
-	}
+std::string BinaryClockReporter::get_string() {
+  return report_time();
 }
 
+void BinaryClockReporter::set_color(char symbol) {
+  switch (symbol) {
+    case '*': r = b = 0; g = 255; break;
+    case '#': g = b = 0; r = 255; break;
+    case '0': r = g = 0; b = 255; break;
+    case '1': r = g = 255; b = 0; break;
+    case '\n': x = -1; y++; break;
+    default: r = g = b = 0; break;
+  }
+  matrix_->SetPixel(x, y, r, g, b);
+  x++;
+}
+
+void LedClock::run() {
+  updater.Start(10);
+  reporter.Start();
+  getchar();
+}
