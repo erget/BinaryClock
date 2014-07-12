@@ -12,24 +12,39 @@ BinaryClock::BinaryClock(): bindate(BinaryDate()) {}
  * Return current time as a string compatible with the RGB LED matrix.
  */
 std::string BinaryClock::report_time() {
-	return std::string("") +
+	return std::string("\n") +
+      /*
 "* *                 # # #\n" +
-"***    " + bindate.get_hour() + "        # # # " +
-	bindate.get_day_of_week() + "\n" +
+"***                 # # #\n" +
+"***    " + bindate.get_hour() + "        # # # " + bindate.get_day_of_week() + "\n" +
 "* *                  # #\n" +
 "\n" +
-" * *\n" +
-"* * *  " + bindate.get_minute() + "\n" +
-"* * *\n" +
+" * *                 # #\n" +
+"* * *               # # #\n" +
+"* * *  " + bindate.get_minute() + "       # # # " + bindate.get_month() + "\n" +
+"* * *               # # #\n" +
 "\n" +
-"****\n" +
-"**\n" +
-"  **   " + bindate.get_second() + "\n" +
-"****\n" +
+"****                ###\n" +
+"**                  #  #\n" +
+"  **   " + bindate.get_second() + "       #  #  " + bindate.get_day() + "\n" +
+"****                ###\n";
+*/
+
+
+"* *                  # #\n" +
+"***                 # # #\n" +
+"***    " + bindate.get_hour() + "        # # # " + bindate.get_month() + "\n" +
+"* *                 # # #\n" +
 "\n" +
-" # #                ###\n" +
-"# # #  " + bindate.get_month() + "         #  # " + bindate.get_day() + "\n" +
-"# # #               ###  ";
+" * *                ###\n" +
+"* * *               #  #\n" +
+"* * *  " + bindate.get_minute() + "       #  #  " + bindate.get_day() + "\n" +
+"* * *               ###\n" +
+"\n" +
+"****                # # #\n" +
+"**                  # # #\n" +
+"  **   " + bindate.get_second() + "       # # # " + bindate.get_day_of_week() + "\n" +
+"****                 # #\n";
 }
 
 StringReporter::~StringReporter() {
