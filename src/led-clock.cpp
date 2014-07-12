@@ -30,27 +30,9 @@ BinaryClock::BinaryClock(): bindate(BinaryDate()) {}
  */
 std::string BinaryClock::report_time() {
 	return std::string("\n") +
-      /*
-"* *                 # # #\n" +
-"***                 # # #\n" +
-"***    " + bindate.get_hour() + "        # # # " + bindate.get_day_of_week() + "\n" +
-"* *                  # #\n" +
-"\n" +
-" * *                 # #\n" +
-"* * *               # # #\n" +
-"* * *  " + bindate.get_minute() + "       # # # " + bindate.get_month() + "\n" +
-"* * *               # # #\n" +
-"\n" +
-"****                ###\n" +
-"**                  #  #\n" +
-"  **   " + bindate.get_second() + "       #  #  " + bindate.get_day() + "\n" +
-"****                ###\n";
-*/
-
-
 "* *                  # #\n" +
 "***                 # # #\n" +
-"***    " + bindate.get_hour() + "        # # # " + bindate.get_month() + "\n" +
+"***     " + bindate.get_hour() + "       # # #  " + bindate.get_month() + "\n" +
 "* *                 # # #\n" +
 "\n" +
 " * *                ###\n" +
@@ -60,7 +42,7 @@ std::string BinaryClock::report_time() {
 "\n" +
 "****                # # #\n" +
 "**                  # # #\n" +
-"  **   " + bindate.get_second() + "       # # # " + bindate.get_day_of_week() + "\n" +
+"  **   " + bindate.get_second() + "       # # #   " + bindate.get_day_of_week() + "\n" +
 "****                 # #\n";
 }
 
