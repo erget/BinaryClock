@@ -30,6 +30,7 @@ build/real-time-clock: | build/i2c
 	echo rtc-ds1307 >> /etc/modules
 	head -n -1 /etc/rc.local > build/rc.local
 	echo "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device" >> build/rc.local
+	echo "hwclock -s" >> build/rc.local
 	tail -n 1 /etc/rc.local >> build/rc.local
 	cp build/rc.local /etc/rc.local
 	touch $@
