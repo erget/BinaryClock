@@ -2,7 +2,11 @@ BinaryClock 1.0.0
 =================
 
 Implementations of binary clocks, both as a hardware prototype for a standalone
-device and for the Raspberry Pi with an LED array.
+device and for the Raspberry Pi with an LED array. A full description of the
+library, how to build the device physically, and suggestions on how to extend
+it are available here:
+
+http://erget.wordpress.com/2014/07/13/building-a-binary-led-clock-based-on-raspberry-pi/
 
 Install with:
 

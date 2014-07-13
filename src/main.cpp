@@ -32,5 +32,6 @@ int main(int argc, char *argv[]) {
   RGBMatrix matrix(&io);
   LedClock clock(matrix);
   clock.run();
+  getchar();
   return 0;
 }

@@ -83,5 +83,4 @@ void BinaryClockReporter::set_color(char symbol) {
 void LedClock::run() {
   updater.Start(10);
   reporter.Start();
-  getchar();
 }
