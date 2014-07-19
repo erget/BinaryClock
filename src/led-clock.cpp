@@ -18,16 +18,13 @@
 #include "led-clock.hpp"
 #include "../external/rpi-rgb-led-matrix/led-matrix.h"
 
+#include <stdexcept>
+#include <iostream>
+#include <stdlib.h> 
 #include <unistd.h>
 
-/**
- * Initialize BinaryClock and store BinaryDate to report from.
- */
 BinaryClock::BinaryClock(): bindate(BinaryDate()) {}
 
-/**
- * Return current time as a string compatible with the RGB LED matrix.
- */
 std::string BinaryClock::report_time() {
 	return std::string("\n") +
 "* *                  # #\n" +
@@ -85,9 +82,23 @@ void BinaryClockReporter::set_color(char symbol) {
   x++;
 }
 
-LedClock::LedClock(RGBMatrix &m) : reporter(&m), updater(&m) {}
+LedClock::LedClock() : io() {
+  if (!io.Init()) {
+    throw std::runtime_error("Couldn't access GPIO pins.");
+  }
+  matrix = new RGBMatrix(&io);
+  reporter = new BinaryClockReporter(matrix);
+  updater = new DisplayUpdater(matrix);
+  run();
+}
+
+LedClock::~LedClock() {
+  delete updater;
+  delete reporter;
+  delete matrix;
+}
 
 void LedClock::run() {
-  updater.Start(10);
-  reporter.Start();
+  updater->Start(10);
+  reporter->Start();
 }

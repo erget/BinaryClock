@@ -26,6 +26,9 @@
 
 /**
  * A binary clock that reports the time tracked by a BinaryDate.
+ *
+ * report_time returns the current time as a string compatible with the RGB LED
+ * matrix.
  */
 class BinaryClock {
 public:
@@ -76,15 +79,19 @@ private:
  * An interface between a BinaryClockReporter and the LED array.
  *
  * The LedClock takes care of managing proper threading for the
- * BinaryClockReporter and the DisplayUpdater.
+ * BinaryClockReporter and the DisplayUpdater. It starts communicating with the
+ * LED array as soon as it is initialized.
  */
 class LedClock {
 public:
-  LedClock(RGBMatrix &m);
+  LedClock();
+  ~LedClock();
   void run();
 private:
-  BinaryClockReporter reporter;
-  DisplayUpdater updater;
+  GPIO io;
+  RGBMatrix *matrix;
+  BinaryClockReporter *reporter;
+  DisplayUpdater *updater;
 };
 
 #endif /* LED_ARRAY_HPP_ */
