@@ -52,7 +52,7 @@ private:
  */
 class StringReporter : public RGBMatrixManipulator {
 public:
-  StringReporter(RGBMatrix *m) : RGBMatrixManipulator(m) {}
+  StringReporter(RGBMatrix *m);
   virtual ~StringReporter();
   void Run();
 protected:
@@ -66,7 +66,7 @@ protected:
  */
 class BinaryClockReporter : public StringReporter, public BinaryClock {
 public:
-  BinaryClockReporter(RGBMatrix *m) : StringReporter(m), BinaryClock() {}
+  BinaryClockReporter(RGBMatrix *m);
 private:
   void set_color(char symbol);
   std::string get_string();
@@ -80,7 +80,7 @@ private:
  */
 class LedClock {
 public:
-  LedClock(RGBMatrix m) : reporter(&m), updater(&m) {}
+  LedClock(RGBMatrix &m);
   void run();
 private:
   BinaryClockReporter reporter;

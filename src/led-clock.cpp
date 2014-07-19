@@ -46,6 +46,8 @@ std::string BinaryClock::report_time() {
 "****                 # #\n";
 }
 
+StringReporter::StringReporter(RGBMatrix *m) : RGBMatrixManipulator(m) {}
+
 StringReporter::~StringReporter() {
   matrix_->ClearScreen();
   matrix_->UpdateScreen();
@@ -63,6 +65,9 @@ void StringReporter::Run() {
   }
 }
 
+BinaryClockReporter::BinaryClockReporter(RGBMatrix *m) :
+  StringReporter(m), BinaryClock() {}
+
 std::string BinaryClockReporter::get_string() {
   return report_time();
 }
@@ -79,6 +84,8 @@ void BinaryClockReporter::set_color(char symbol) {
   matrix_->SetPixel(x, y, r, g, b);
   x++;
 }
+
+LedClock::LedClock(RGBMatrix &m) : reporter(&m), updater(&m) {}
 
 void LedClock::run() {
   updater.Start(10);
